@@ -1,0 +1,15 @@
+
+services:
+  dns:
+    image: ubuntu/bind9:9.18-24.04_edge
+    container_name: dns-bind9
+    restart: unless-stopped
+    environment:
+      TZ: America/La_Paz
+    ports:
+      - "1053:53/udp"
+      - "1053:53/tcp"
+    volumes:
+      - ./config:/etc/bind:ro
+      - ./zones:/var/lib/bind:ro
+    command: ["-g", "-c", "/etc/bind/named.conf"]
